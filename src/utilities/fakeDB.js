@@ -1,5 +1,5 @@
 
-const setIdAndValueToLocalStorage = id => {
+const setIdToLocalStorage = id => {
   let cart = getAlreadySavedCart();
 
   if (id in cart) {
@@ -27,3 +27,4 @@ const getAlreadySavedCart = () => {
   return cart;
 }
 
+export { setIdToLocalStorage };
