@@ -27,4 +27,4 @@ const getAlreadySavedCart = () => {
   return cart;
 }
 
-export { setIdToLocalStorage };
+export { setIdToLocalStorage, getAlreadySavedCart };
