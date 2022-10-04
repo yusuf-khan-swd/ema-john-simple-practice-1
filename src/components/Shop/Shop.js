@@ -16,23 +16,33 @@ const Shop = () => {
   useEffect(() => {
     const savedCart = getAlreadySavedCart();
 
-    let previouslyAddedProducts = [];
+    const previouslySavedProducts = [];
     for (let key in savedCart) {
-      const matchedProduct = products.find(product => product.id === key);
-      if (matchedProduct) {
-        matchedProduct.quantity = savedCart[key];
-        previouslyAddedProducts.push(matchedProduct);
+      const previouslySavedProduct = products.find(product => product.id === key);
+      if (previouslySavedProduct) {
+        previouslySavedProduct.quantity = savedCart[key];
+        previouslySavedProducts.push(previouslySavedProduct)
       }
     }
 
-    setCart(previouslyAddedProducts);
-
+    setCart(previouslySavedProducts)
   }, [products]);
 
-  const handleAddToCart = product => {
-    const newCart = [...cart, product];
+  const handleAddToCart = selectedProduct => {
+    let newCart = [];
+    const productExistInCart = cart.find(product => product.id === selectedProduct.id);
+    if (productExistInCart) {
+      productExistInCart.quantity += 1;
+      const resOfProduct = cart.filter(product => product.id !== selectedProduct.id);
+      newCart = [...resOfProduct, productExistInCart];
+    }
+    else {
+      selectedProduct.quantity = 1;
+      newCart = [...cart, selectedProduct];
+    }
+
     setCart(newCart);
-    setIdToLocalStorage(product.id);
+    setIdToLocalStorage(selectedProduct.id);
   }
 
   return (
